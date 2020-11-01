@@ -2,7 +2,7 @@
 
 ## Table of contents
 * [Setup](#setup)
-* [Task 2](#task-2)
+* [Task 3](#task-3)
 
 ## Setup
 To run this project, install it locally using npm:
@@ -122,5 +122,10 @@ Not covered yet - PR will be updated
 Not created yet - PR will be updated
 ```
 
-### Deployed applications
+***
+##### Link to FE repository 
+[Task3 Pull Request](https://github.com/valakar/nodejs-aws-fe/pull/2)
+
+***
+##### Deployed applications
 [Cloudfront](https://d232a2m5r21slj.cloudfront.net/)
