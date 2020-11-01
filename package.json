@@ -8,6 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "postinstall": "cd ./product-service && npm i"
   },
   "repository": {
     "type": "git",
