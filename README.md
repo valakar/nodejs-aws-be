@@ -108,7 +108,7 @@ Not created yet - PR will be updated
 
 +1 - Lambda handlers are covered by basic UNIT tests (NO infrastructure logic is needed to be covered) (You may use JEST)
 ```
-Not covered yet - PR will be updated
+npr run test
 ```
 
 +1 - Lambda handlers (getProductsList, getProductsById) code is written not in 1 single module (file) and separated in codebase.
@@ -119,7 +119,9 @@ Not covered yet - PR will be updated
 
 +1 - Main error scenarious are handled by API ("Product not found" error, try catch blocks are used in lambda handlers).
 ```
-Not created yet - PR will be updated
+If not products available API will reply with 404 - No products found
+If product not found API will reply with 404 - Product not found
+    -> GET https://lpeipbrbk3.execute-api.eu-west-1.amazonaws.com/dev/products/badId
 ```
 
 ***
