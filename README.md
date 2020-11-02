@@ -88,7 +88,7 @@ RESPONSE Product
 
 +1 - Async/await is used in lambda functions
 ```
-Not used yet - PR will be updated
+Get product by Id using async/await for demo purpose
 ```
 
 +1 - ES6 modules are used for product-service implementation
