@@ -10,8 +10,15 @@ export const getProductById: APIGatewayProxyHandler = async (event) => {
     }
 
     const product = productList.find(product => product.id === id);
+    const asyncProduct = await getAsyncProduct(product);
 
-    return product
-        ? _200(product)
+    return asyncProduct
+        ? _200(asyncProduct)
         : _404('Product not found');
+}
+
+const getAsyncProduct = async (product) => {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(product), 1000)
+    });
 }
