@@ -102,9 +102,8 @@ Please check webpack.config.js
 ```
 
 +1 - SWAGGER documentation is created for product-service
-```
-Not created yet - PR will be updated
-```
+
+[Swagger](https://app.swaggerhub.com/apis/Lelou/NodeAWSBE/0.0.1) - all requests should work
 
 +1 - Lambda handlers are covered by basic UNIT tests (NO infrastructure logic is needed to be covered) (You may use JEST)
 ```
