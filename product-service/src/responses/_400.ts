@@ -1,4 +1,6 @@
-export const _400 = (data = 'Bad Request') => ({
+import { APIGatewayProxyResult } from 'aws-lambda';
+
+export const _400 = (data = 'Bad Request'): APIGatewayProxyResult => ({
     statusCode: 400,
     headers: {
         'Access-Control-Allow-Origin': '*',
