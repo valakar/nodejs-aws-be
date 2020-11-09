@@ -10,7 +10,7 @@ create table product (
 
 create table stock (
     id uuid primary key default uuid_generate_v4(),
-    product_id uuid unique not null references product(id),
+    product_id uuid unique not null references product(id) on delete cascade,
     count int not null default 0
 )
 
