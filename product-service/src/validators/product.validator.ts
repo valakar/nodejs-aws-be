@@ -15,7 +15,7 @@ export namespace ProductValidator {
             image: Joi.string(),
             description: Joi.string(),
             tier: Joi.string(),
-            score: Joi.string()
+            score: Joi.number()
         });
 
         return await schema.validateAsync(product);
