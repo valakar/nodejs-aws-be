@@ -42,8 +42,8 @@ provided for cross-check reviewer.
 
 ***
 ##### Deployed applications
-[Cloudfront](https://d232a2m5r21slj.cloudfront.net/)
+[Cloudfront](https://d1jpnfaozgam1v.cloudfront.net/)
 
 ***
 ##### Documentation
-[Swagger](https://app.swaggerhub.com/apis/Lelou/NodeAWSBE/0.0.2) - all requests should work
+[Swagger](https://app.swaggerhub.com/apis/valakar/NodeAWSBE/0.0.3) - all requests should work
