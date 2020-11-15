@@ -4,13 +4,30 @@ import {
     APIGatewayProxyEventBase,
     APIGatewayProxyHandler,
 } from 'aws-lambda';
-import productList from '../mock/product-list.json';
 import { getProductById } from './get-product-by-id';
+import { ProductService } from '../services/product.service';
+
+jest.mock('../services/product.service');
+jest.mock('../utility/logger');
 
 describe('get product by id', () => {
     let sut: APIGatewayProxyHandler;
-    let event: Partial<APIGatewayProxyEventBase<APIGatewayEventDefaultAuthorizerContext>>
+    let event: Partial<APIGatewayProxyEventBase<APIGatewayEventDefaultAuthorizerContext>>;
     let response;
+    const existingProductId = '7567ec4b-b10c-48c5-9345-fc73c48a80aa';
+
+    beforeEach(() => {
+        ProductService.prototype.getProductById = jest.fn().mockImplementation(
+            (id) => {
+                switch (id) {
+                    case existingProductId:
+                        return Promise.resolve('success');
+                    default:
+                        return Promise.resolve(null);
+                }
+            },
+        );
+    });
 
     beforeEach(() => {
         sut = getProductById;
@@ -20,10 +37,10 @@ describe('get product by id', () => {
         beforeEach(async () => {
             event = {
                 pathParameters: {
-                    id: '7567ec4b-b10c-48c5-9345-fc73c48a80aa'
-                }
-            }
-            response = await sut(<any>event, null, null)
+                    id: existingProductId,
+                },
+            };
+            response = await sut(<any>event, null, null);
         });
 
         test('should response with 200', () => {
@@ -33,7 +50,7 @@ describe('get product by id', () => {
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Credentials': true,
                 },
-                body: JSON.stringify(productList[0]),
+                body: JSON.stringify('success'),
             });
         });
     });

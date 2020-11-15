@@ -5,7 +5,7 @@ import { Logger } from '../utility/logger';
 import { Product } from '../../../../nodejs-aws-fe/src/models/Product';
 import { ProductValidator } from '../validators/product.validator';
 
-export const postProduct: APIGatewayProxyHandler = async (event) => {
+export const createProduct: APIGatewayProxyHandler = async (event) => {
     Logger.logEvent(event);
 
     const productService = new ProductService();
