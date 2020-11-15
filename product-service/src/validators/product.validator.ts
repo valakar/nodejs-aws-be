@@ -6,7 +6,6 @@ export namespace ProductValidator {
     export const validateProductCreation = async (product: Product): Promise<any> => {
         const schema = Joi.object({
             title: Joi.string()
-                .alphanum()
                 .min(1)
                 .max(256)
                 .required(),
