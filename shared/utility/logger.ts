@@ -1,8 +1,11 @@
-import { APIGatewayEventDefaultAuthorizerContext, APIGatewayProxyEventBase } from 'aws-lambda';
+interface APIGatewayProxyEvent {
+    body: string | null;
+    queryStringParameters: { [name: string]: string } | null;
+    pathParameters: { [name: string]: string } | null;
+}
 
-/** @deprecated Use shared Logger*/
 export namespace Logger {
-    export const logEvent = (event: APIGatewayProxyEventBase<APIGatewayEventDefaultAuthorizerContext>): void => {
+    export const logEvent = (event: APIGatewayProxyEvent): void => {
         console.log(`Body: ${JSON.stringify(event?.body)}`);
         console.log(`QueryParams: ${JSON.stringify(event?.queryStringParameters)}`);
         console.log(`PathParams: ${JSON.stringify(event?.pathParameters)}`);

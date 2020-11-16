@@ -1,5 +1,5 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { _200, _400, _500 } from '../responses';
+import { _200, _400, _500 } from '../../../shared/responses';
 import { ProductService } from '../services/product.service';
 import { Logger } from '../utility/logger';
 import { Product } from '../../../../nodejs-aws-fe/src/models/Product';

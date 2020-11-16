@@ -5,6 +5,7 @@
   "main": "handler.js",
   "scripts": {
     "deploy": "npx sls deploy",
+    "deploy:importProductsFile": "npx sls deploy --function importProductsFile",
     "test": "jest"
   },
   "dependencies": {
