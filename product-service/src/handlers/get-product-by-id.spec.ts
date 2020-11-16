@@ -8,7 +8,7 @@ import { getProductById } from './get-product-by-id';
 import { ProductService } from '../services/product.service';
 
 jest.mock('../services/product.service');
-jest.mock('../utility/logger');
+jest.mock('../../../shared/utility/logger');
 
 describe('get product by id', () => {
     let sut: APIGatewayProxyHandler;

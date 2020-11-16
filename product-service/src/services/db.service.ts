@@ -1,6 +1,6 @@
 import { Client, ClientConfig } from 'pg';
-import { config } from '../utility/config';
-import { Logger } from '../utility/logger';
+import { config } from '../configs/config';
+import { Logger } from '../../../shared/utility/logger';
 
 export class DBService {
     private readonly dbOptions: ClientConfig = {

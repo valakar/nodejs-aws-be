@@ -3,7 +3,7 @@ import { APIGatewayProxyHandler } from 'aws-lambda';
 import { getProductList } from './get-product-list';
 import { ProductService } from '../services/product.service';
 jest.mock('../services/product.service');
-jest.mock('../utility/logger');
+jest.mock('../../../shared/utility/logger');
 
 describe('get product list', () => {
     let sut: APIGatewayProxyHandler;

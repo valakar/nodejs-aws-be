@@ -1,4 +1,4 @@
-import { getEnv } from './env';
+import { getEnv } from '../../../shared/env';
 
 export const config = {
     PG_HOST: getEnv('PG_HOST') ,
