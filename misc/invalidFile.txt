@@ -1,0 +1,2 @@
+title,description,tier,image,price,score
+Red Dead Redemption 3,Red Dead Redemption 2 is a game in Mighty tier with score of 95,Mighty,https://c.opencritic.com/images/games/3717/banner.jpg,192,95
