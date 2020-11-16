@@ -8,7 +8,7 @@ import { Product } from '../../../../nodejs-aws-fe/src/models/Product';
 import { expect } from '@jest/globals';
 
 jest.mock('../services/product.service');
-jest.mock('../utility/logger');
+jest.mock('../../../shared/utility/logger');
 
 describe('create product', () => {
     let sut: APIGatewayProxyHandler;

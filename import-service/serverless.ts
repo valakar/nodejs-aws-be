@@ -1,4 +1,6 @@
+require('dotenv').config();
 import { Serverless } from 'serverless/aws';
+import { config } from './src/configs/config';
 
 const serverlessConfiguration: Serverless = {
     service: {
@@ -12,7 +14,10 @@ const serverlessConfiguration: Serverless = {
         },
     },
     // Add the serverless-webpack plugin
-    plugins: ['serverless-webpack'],
+    plugins: [
+        'serverless-webpack',
+        'serverless-dotenv-plugin'
+    ],
     provider: {
         name: 'aws',
         runtime: 'nodejs12.x',
@@ -27,12 +32,12 @@ const serverlessConfiguration: Serverless = {
             {
                 Effect: 'Allow',
                 Action: 's3:ListBucket',
-                Resource: 'arn:aws:s3:::vstore-app-upload-bucket',
+                Resource: `arn:aws:s3:::${config.BUCKET}`,
             },
             {
                 Effect: 'Allow',
                 Action: 's3:*',
-                Resource: 'arn:aws:s3:::vstore-app-upload-bucket/*'
+                Resource: `arn:aws:s3:::${config.BUCKET}/*`
             },
         ],
     },
@@ -55,6 +60,19 @@ const serverlessConfiguration: Serverless = {
                 },
             ],
         },
+        importFileParser: {
+            handler: 'handler.importFileParser',
+            events: [
+                {
+                    s3: {
+                        bucket: config.BUCKET,
+                        event: 's3:ObjectCreated:*',
+                        rules: [{prefix: 'uploaded/', suffix: ''}],
+                        existing: true
+                    }
+                }
+            ]
+        }
     },
 };
 

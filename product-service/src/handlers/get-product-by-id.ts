@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { _200, _400, _404, _500 } from '../../../shared/responses';
 import { ProductService } from '../services/product.service';
-import { Logger } from '../utility/logger';
+import { Logger } from '../../../shared/utility/logger';
 
 export const getProductById: APIGatewayProxyHandler = async (event) => {
     Logger.logEvent(event);
