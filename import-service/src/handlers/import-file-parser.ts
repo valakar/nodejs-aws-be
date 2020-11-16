@@ -5,7 +5,6 @@ import { _400 } from '../../../shared/responses';
 // TODO add proper type for event and response
 export const importFileParser = async (event: any, _context) => {
     Logger.logEvent(event);
-
     const s3Service = new S3Service();
 
     if (!event?.Records) {
