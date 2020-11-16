@@ -2,7 +2,7 @@
 
 ## Table of contents
 * [Setup](#setup)
-* [Task 4](#task-4)
+* [Task 5](#task-5)
 
 ## Setup
 To run this project, install it locally using npm:
@@ -16,26 +16,23 @@ To deploy *product-service* run:
 $ cd product-service && npm run deploy 
 ```
 
-## Task 4
+## Task 5
 
-#### EVALUATION CRITERIA
-- [x]  **1** - Task 4.1 is implemented
-- [x]  **3** - TASK 4.2 is implemented lambda links are provided and returns data
-- [x]  **4** - TASK 4.3 is implemented lambda links are provided and products is stored in DB (call TASK 4.2 to see the product)
-- [x]  **5** - Your own Frontend application is integrated
-with product service (/products API) and products from product-service
-are represented on Frontend. Link to a working Front-End application is
-provided for cross-check reviewer.
-***
+## Evaluation criteria
+---
 
-#### Additional (optional) tasks (but nice to have):
-**Additional (optional) tasks (but nice to have):**
+Reviewers should verify the lambda functions by invoking them through provided URLs.
 
-- [x]  **+1** - POST/products lambda functions returns error 400 status code if product data is invalid
-- [x]  **+1** - All lambdas return error 500 status code on any error (DB connection, any unhandled error in code)
-- [x]  **+1** - All lambdas do console.log for each incoming requests and their arguments
-- [x]  **+1** - Transaction based creation of product (in case stock creation is failed then related to this stock product is not created and not ready to be used by the end user and vice versa) ([https://devcenter.kinvey.com/nodejs/tutorials/bl-transactional-support](https://devcenter.kinvey.com/nodejs/tutorials/bl-transactional-support))
+- [x]  **1** - File **serverless.yml** contains configuration for **importProductsFile** function
+- [x]  **3** - The **importProductsFile** lambda function returns a correct response which can be used to upload a file into the **S3** bucket
+- [x]  **4** - Frontend application is integrated with **importProductsFile** lambda
+- [x]  **5** - The **importFileParser** lambda function is implemented and **serverless.yml** contains configuration for the lambda
 
+## Additional (optional) tasks
+
+- [x]  **+1** - **async/await** is used in lambda functions
+- [x]  **+1** - **importProductsFile** lambda is covered by **unit** tests (**aws-sdk-mock** can be used to mock S3 methods - [https://www.npmjs.com/package/aws-sdk-mock](https://www.npmjs.com/package/aws-sdk-mock))
+- [x]  **+1** - At the end of the **stream** the lambda function should move the file from the **uploaded** folder into the **parsed** folder (move the file means that file should be copied into **parsed** folder, and then deleted from **uploaded** folder)
 ***
 ##### Link to FE repository 
 [Task4 Pull Request](https://github.com/valakar/nodejs-aws-fe/pull/3)
