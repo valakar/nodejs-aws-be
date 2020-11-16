@@ -1,27 +1,20 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import * as S3 from 'aws-sdk/clients/s3';
 import { Logger } from '../../../shared/utility/logger';
 import { _200, _500 } from '../../../shared/responses';
-import { config } from '../configs/config';
+import { S3Service } from '../services/s3.service';
 
 export const importProductsFile: APIGatewayProxyHandler = async (event, _context) => {
     Logger.logEvent(event);
 
+    const s3Service = new S3Service();
+
+    const operation = 'putObject';
     const catalogPath = `uploaded/${(
         event.queryStringParameters.name
     )}`;
 
-    const s3 = new S3({ region: 'eu-west-1' });
-    const operation = 'putObject';
-    const params = {
-        Bucket: config.BUCKET,
-        Key: catalogPath,
-        Expires: 60,
-        ContentType: 'text/csv'
-    };
-
     try {
-        const response: string = await s3.getSignedUrlPromise(operation, params);
+        const response: string = await s3Service.getSignedUrl(operation, catalogPath);
 
         Logger.logResponse(response);
 
