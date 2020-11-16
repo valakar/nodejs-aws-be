@@ -1,6 +1,4 @@
-import { APIGatewayProxyResult } from 'aws-lambda';
-
-export const _404 = (data = 'Not Found'): APIGatewayProxyResult => ({
+export const _404 = (data = 'Not Found'): any => ({
     statusCode: 404,
     headers: {
         'Access-Control-Allow-Origin': '*',

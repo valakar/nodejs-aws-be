@@ -1,13 +1,12 @@
-import * as S3 from 'aws-sdk/clients/s3';
+import AWS, { AWSError } from 'aws-sdk';
 import { CopyObjectOutput, DeleteObjectOutput } from 'aws-sdk/clients/s3';
-import * as csv from 'csv-parser';
+import csv from 'csv-parser';
 import { config } from '../configs/config';
-import { AWSError } from 'aws-sdk';
 import { PromiseResult } from 'aws-sdk/lib/request';
 import { Readable } from 'stream';
 
 export class S3Service {
-    private readonly s3 = new S3({ region: 'eu-west-1' });
+    private readonly s3 = new AWS.S3({ region: 'eu-west-1' });
     private readonly bucket = config.BUCKET;
 
     async getSignedUrl(operation, catalogPath): Promise<string> {

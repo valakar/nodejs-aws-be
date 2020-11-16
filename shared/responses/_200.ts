@@ -1,6 +1,4 @@
-import { APIGatewayProxyResult } from 'aws-lambda';
-
-export const _200 = (data = {}): APIGatewayProxyResult => ({
+export const _200 = (data = {}): any => ({
     statusCode: 200,
     headers: {
         'Access-Control-Allow-Origin': '*',

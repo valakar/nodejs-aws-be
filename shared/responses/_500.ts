@@ -1,6 +1,4 @@
-import { APIGatewayProxyResult } from 'aws-lambda';
-
-export const _500 = (error: Error): APIGatewayProxyResult => ({
+export const _500 = (error: Error): any => ({
     statusCode: 500,
     headers: {
         'Access-Control-Allow-Origin': '*',
