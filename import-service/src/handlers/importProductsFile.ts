@@ -1,7 +1,5 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import * as S3 from 'aws-sdk/clients/s3';
-import { PromiseResult } from 'aws-sdk/lib/request';
-import { AWSError } from 'aws-sdk/lib/error';
 import { Logger } from '../../../shared/utility/logger';
 import { _200, _500 } from '../../../shared/responses';
 
@@ -10,19 +8,25 @@ const BUCKET = 'vstore-app-upload-bucket';
 export const importProductsFile: APIGatewayProxyHandler = async (event, _context) => {
     Logger.logEvent(event);
 
+    const catalogPath = `uploaded/${(
+        event.queryStringParameters.name
+    )}`;
+
     const s3 = new S3({ region: 'eu-west-1' });
-    const params: S3.Types.ListObjectsRequest = {
+    const operation = 'putObject';
+    const params = {
         Bucket: BUCKET,
-        Prefix: 'thumbnails/',
+        Key: catalogPath,
+        Expires: 60,
+        ContentType: 'text/csv'
     };
 
     try {
-        const response: PromiseResult<S3.Types.ListObjectsV2Output, AWSError> =
-            await s3.listObjectsV2(params).promise();
+        const response: string = await s3.getSignedUrlPromise(operation, params);
 
         Logger.logResponse(response);
 
-        return _200(response?.Contents);
+        return _200(response);
     } catch (error) {
         return _500(error);
     }
