@@ -4,6 +4,7 @@ import csv from 'csv-parser';
 import { config } from '../configs/config';
 import { PromiseResult } from 'aws-sdk/lib/request';
 import { Readable } from 'stream';
+import { S3EventRecord } from 'aws-lambda/trigger/s3';
 
 export class S3Service {
     private readonly s3 = new AWS.S3({ region: 'eu-west-1' });
@@ -20,8 +21,7 @@ export class S3Service {
         return await this.s3.getSignedUrlPromise(operation, params);
     }
 
-    // TODO add proper type for record
-    async parseFile(records): Promise<any> {
+    async parseFile(records: S3EventRecord[]): Promise<any> {
         const complete = () => {};
         const onComplete = new Promise(complete);
 
