@@ -66,6 +66,19 @@ const serverlessConfiguration: Serverless = {
                         Ref: 'SNSTopic'
                     }
                 }
+            },
+            SNSSubscriptionBackup: {
+                Type: 'AWS::SNS::Subscription',
+                Properties: {
+                    Endpoint: config.BACKUP_EMAIL,
+                    Protocol: 'email',
+                    TopicArn: {
+                        Ref: 'SNSTopic'
+                    },
+                    FilterPolicy: {
+                        "tier": ["Mighty"]
+                    }
+                }
             }
         },
         Outputs: {
