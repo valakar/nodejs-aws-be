@@ -14,7 +14,8 @@
   "dependencies": {
     "joi": "^17.3.0",
     "pg": "^8.4.2",
-    "source-map-support": "^0.5.10"
+    "source-map-support": "^0.5.10",
+    "aws-sdk": "^2.792.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",

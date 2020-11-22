@@ -29,7 +29,19 @@ const serverlessConfiguration: Serverless = {
         },
         environment: {
             AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+            SNS_TOPIC_ARN: {
+                Ref: 'SNSTopic'
+            }
         },
+        iamRoleStatements: [
+            {
+                Effect: 'Allow',
+                Action: 'sns:publish',
+                Resource: {
+                    Ref: 'SNSTopic'
+                }
+            }
+        ],
     },
     resources: {
         Resources: {
@@ -39,6 +51,22 @@ const serverlessConfiguration: Serverless = {
                     QueueName: 'catalogItemsQueue',
                 },
             },
+            SNSTopic: {
+                Type: 'AWS::SNS::Topic',
+                Properties: {
+                    TopicName: 'createProductTopic'
+                }
+            },
+            SNSSubscription: {
+                Type: 'AWS::SNS::Subscription',
+                Properties: {
+                    Endpoint: config.EMAIL,
+                    Protocol: 'email',
+                    TopicArn: {
+                        Ref: 'SNSTopic'
+                    }
+                }
+            }
         },
         Outputs: {
             SQSQueueUrl: {

@@ -8,4 +8,6 @@ export const config = {
     PG_PASSWORD: getEnv('PG_PASSWORD'),
     CONNECTION_TIMEOUT: getEnv('CONNECTION_TIMEOUT') || 5000,
     REGION: getEnv('REGION') || 'eu-west-1',
+    EMAIL: getEnv('EMAIL'),
+    SNS_TOPIC_ARN: getEnv('SNS_TOPIC_ARN'),
 }
