@@ -1,0 +1,3 @@
+describe('catalog batch process', () => {
+    
+});

@@ -21,12 +21,13 @@ const serverlessConfiguration: Serverless = {
     provider: {
         name: 'aws',
         runtime: 'nodejs12.x',
-        region: 'eu-west-1',
+        region: config.REGION,
         apiGateway: {
             minimumCompressionSize: 1024,
         },
         environment: {
             AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+            SQS_URL: `$\{${config.PRODUCT_SERVICE_STACK}.SQSQueueUrl}`,
         },
         iamRoleStatements: [
             {
@@ -39,6 +40,11 @@ const serverlessConfiguration: Serverless = {
                 Action: 's3:*',
                 Resource: `arn:aws:s3:::${config.BUCKET}/*`
             },
+            {
+                Effect: 'Allow',
+                Action: 'sqs:*',
+                Resource: `$\{${config.PRODUCT_SERVICE_STACK}.SQSQueueArn}`
+            }
         ],
     },
     functions: {
