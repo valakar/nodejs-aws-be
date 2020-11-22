@@ -16,26 +16,27 @@ To deploy *product-service* run:
 $ cd product-service && npm run deploy 
 ```
 
-## Task 5
+## Task 6
 
 ## Evaluation criteria
----
 
-Reviewers should verify the lambda functions by invoking them through provided URLs.
 
-- [x]  **1** - File **serverless.yml** contains configuration for **importProductsFile** function
-- [x]  **3** - The **importProductsFile** lambda function returns a correct response which can be used to upload a file into the **S3** bucket
-- [x]  **4** - Frontend application is integrated with **importProductsFile** lambda
-- [x]  **5** - The **importFileParser** lambda function is implemented and **serverless.yml** contains configuration for the lambda
+Reviewers should verify the lambda functions, SQS and SNS topic and subscription in PR.
+
+- [x]  **1** - File **serverless.yml** contains configuration for **catalogBatchProcess** function
+- [ ]  **2** - File **serverless.yml** contains policies to allow lambda **catalogBatchProcess** function to interact with SNS and SQS
+- [x]  **3** - File **serverless.yml** contains configuration for SQS **catalogItemsQueue**
+- [ ]  **4** - File **serverless.yml** contains configuration for SNS Topic **createProductTopic** and email subscription
 
 ## Additional (optional) tasks
+---
 
-- [x]  **+1** - **async/await** is used in lambda functions
-- [x]  **+1** - **importProductsFile** lambda is covered by **unit** tests (**aws-sdk-mock** can be used to mock S3 methods - [https://www.npmjs.com/package/aws-sdk-mock](https://www.npmjs.com/package/aws-sdk-mock))
-- [x]  **+1** - At the end of the **stream** the lambda function should move the file from the **uploaded** folder into the **parsed** folder (move the file means that file should be copied into **parsed** folder, and then deleted from **uploaded** folder)
+- [ ]  **+1** - **catalogBatchProcess** lambda is covered by **unit** tests
+- [ ]  **+1** - set a Filter Policy for SNS **createProductTopic** in **serverless.yml** (Create an additional email subscription and distribute messages to different emails depending on the filter for any product attribute)
+
 ***
 ##### Link to FE repository 
-[Task5 Pull Request](https://github.com/valakar/nodejs-aws-fe/pull/4)
+[Task6 Pull Request](https://github.com/valakar/nodejs-aws-fe/pull/5)
 
 ***
 ##### Deployed applications

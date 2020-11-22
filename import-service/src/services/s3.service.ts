@@ -1,4 +1,4 @@
-import AWS, { AWSError } from 'aws-sdk';
+import { AWSError, S3 } from 'aws-sdk';
 import { CopyObjectOutput, DeleteObjectOutput } from 'aws-sdk/clients/s3';
 import csv from 'csv-parser';
 import { config } from '../configs/config';
@@ -7,7 +7,7 @@ import { Readable } from 'stream';
 import { S3EventRecord } from 'aws-lambda/trigger/s3';
 
 export class S3Service {
-    private readonly s3 = new AWS.S3({ region: 'eu-west-1' });
+    private readonly s3 = new S3({ region: config.REGION });
     private readonly bucket = config.BUCKET;
 
     async getSignedUrl(operation, catalogPath): Promise<string> {
@@ -21,18 +21,19 @@ export class S3Service {
         return await this.s3.getSignedUrlPromise(operation, params);
     }
 
-    async parseFile(records: S3EventRecord[]): Promise<any> {
+    async parseFile(records: S3EventRecord[], handleRecord?: (body: any) => void): Promise<any> {
         const complete = () => {};
         const onComplete = new Promise(complete);
 
         records.forEach(record => {
-            console.log(`Record: ${record}`);
+            console.log(`Record: ${JSON.stringify(record)}`);
             const recordKey = record.s3.object.key;
 
             const s3Stream = this.getReadableStream(recordKey);
 
             s3Stream.pipe(csv())
-                .on('data', data => this.onData(data))
+                .on('error', error => this.onError(error))
+                .on('data', data => handleRecord(data))
                 .on('error', error => this.onError(error))
                 .on('end', async () => {
                     console.log(`Copy from ${this.bucket}/${recordKey}`);
@@ -45,10 +46,6 @@ export class S3Service {
         });
 
         return await onComplete;
-    }
-
-    private onData(data) {
-        console.log(`Data: ${JSON.stringify(data)}`);
     }
 
     private onError(error) {
