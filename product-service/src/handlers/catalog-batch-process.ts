@@ -26,7 +26,7 @@ export const catalogBatchProcess: SQSHandler = async (event): Promise<void> => {
 
         isValid && await productService.createProduct(product);
 
-        processedProducts.push(product);
+        isValid && processedProducts.push(product);
     }
 
     const message = processedProducts.map(({title, count}, index) => {

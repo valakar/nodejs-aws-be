@@ -4,6 +4,7 @@ import Joi from 'joi';
 // TODO dig into HttpRequestValidator from serverless
 export namespace ProductValidator {
     export const validateProductCreation = async (product: Product): Promise<any> => {
+        console.log(124, product);
         const schema = Joi.object({
             title: Joi.string()
                 .min(1)

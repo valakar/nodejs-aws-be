@@ -28,6 +28,7 @@
     "serverless-aws-documentation": "^1.1.0",
     "serverless-dotenv-plugin": "^3.1.0",
     "serverless-webpack": "^5.2.0",
+    "sinon": "^9.2.1",
     "ts-jest": "^26.4.3",
     "ts-loader": "^5.3.3",
     "ts-node": "^8.10.2",
