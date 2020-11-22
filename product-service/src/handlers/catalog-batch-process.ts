@@ -1,35 +1,25 @@
 import { SQSHandler } from 'aws-lambda';
 import { Logger } from '../../../shared/utility/logger';
+import { ProductValidator } from '../validators/product.validator';
+import { ProductService } from '../services/product.service';
 
 export const catalogBatchProcess: SQSHandler = async (event): Promise<void> => {
     Logger.logEvent(event);
-    // const productService = new ProductService();
-    // let product: Product;
+    const productService = new ProductService();
 
-    // try {
-    //     if (!event?.body) {
-    //         return _400('No product provided');
-    //     }
-    //     const body = JSON.parse(event.body);
-    //     product = {
-    //         title: body.title,
-    //         price: body.price,
-    //         count: body.count,
-    //         image: body.image,
-    //         description: body.description,
-    //         tier: body.tier,
-    //         score: body.score,
-    //     };
-    //
-    //     await ProductValidator.validateProductCreation(product);
-    // } catch (err) {
-    //     return _400(`Invalid data provided: ${err}`);
-    // }
+    const records = event?.Records;
+    if (!records) {
+        console.error('No Records');
+        return;
+    }
 
-    try {
-        // await productService.createProduct(product);
-        // return _200();
-    } catch (error) {
-        // return _500(error);
+    console.log(`Processing ${records.length} products`);
+
+    for (const record of records) {
+        console.log(`Processing -> ${record.body}`);
+
+        const product = JSON.parse(record.body);
+        const isValid = await ProductValidator.validateProductCreation(product);
+        isValid && await productService.createProduct(product);
     }
 };
