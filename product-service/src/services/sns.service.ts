@@ -8,13 +8,14 @@ export class SNSService {
     private readonly topicArn = config.SNS_TOPIC_ARN;
 
     sendEmail(subject: string, body: string): Promise<PromiseResult<PublishResponse, AWSError>> {
-        return this.sns.publish({
+        const a = this.sns.publish({
             Subject: subject,
             Message: body,
             TopicArn: this.topicArn
         }, (error, data) => {
             console.log(`Send email -> Data: ${JSON.stringify(data)}`);
             console.log(`Send email -> Error: ${JSON.stringify(error)}`);
-        }).promise();
+        });
+        return a.promise();
     }
 }
