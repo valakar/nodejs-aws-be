@@ -15,17 +15,8 @@ export const createProduct: APIGatewayProxyHandler = async (event) => {
         if (!event?.body) {
             return _400('No product provided');
         }
-        const body = JSON.parse(event.body);
-        product = {
-            title: body.title,
-            price: body.price,
-            count: body.count,
-            image: body.image,
-            description: body.description,
-            tier: body.tier,
-            score: body.score,
-        };
 
+        const product = JSON.parse(event.body);
         await ProductValidator.validateProductCreation(product);
     } catch (err) {
         return _400(`Invalid data provided: ${err}`);
