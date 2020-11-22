@@ -36,7 +36,7 @@ Reviewers should verify the lambda functions, SQS and SNS topic and subscription
 ---
 
 - [ ]  **+1** - **catalogBatchProcess** lambda is covered by **unit** tests
-- [ ]  **+1** - set a Filter Policy for SNS **createProductTopic** in **serverless.yml** (Create an additional email subscription and distribute messages to different emails depending on the filter for any product attribute)
+- [x]  **+1** - set a Filter Policy for SNS **createProductTopic** in **serverless.yml** (Create an additional email subscription and distribute messages to different emails depending on the filter for any product attribute)
 
 ***
 ##### Deployed applications

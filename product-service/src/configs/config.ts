@@ -9,5 +9,6 @@ export const config = {
     CONNECTION_TIMEOUT: getEnv('CONNECTION_TIMEOUT') || 5000,
     REGION: getEnv('REGION') || 'eu-west-1',
     EMAIL: getEnv('EMAIL'),
+    BACKUP_EMAIL: getEnv('BACKUP_EMAIL'),
     SNS_TOPIC_ARN: getEnv('SNS_TOPIC_ARN'),
 }
