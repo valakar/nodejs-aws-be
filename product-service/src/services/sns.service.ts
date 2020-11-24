@@ -7,15 +7,21 @@ export class SNSService {
     private readonly sns = new SNS({ region: config.REGION });
     private readonly topicArn = config.SNS_TOPIC_ARN;
 
-    sendEmail(subject: string, body: string): Promise<PromiseResult<PublishResponse, AWSError>> {
-        const a = this.sns.publish({
+    sendEmail(subject: string, body: string, options: {
+        topTier
+    }): Promise<PromiseResult<PublishResponse, AWSError>> {
+        console.log('FilterPolicyAttributes: ', options);
+
+        return this.sns.publish({
             Subject: subject,
             Message: body,
-            TopicArn: this.topicArn
-        }, (error, data) => {
-            console.log(`Send email -> Data: ${JSON.stringify(data)}`);
-            console.log(`Send email -> Error: ${JSON.stringify(error)}`);
-        });
-        return a.promise();
+            TopicArn: this.topicArn,
+            MessageAttributes: {
+                topTier: {
+                    DataType: 'String',
+                    StringValue: String(options?.topTier),
+                },
+            },
+        }).promise();
     }
 }
