@@ -1,5 +1,5 @@
 import { DBService } from './db.service';
-import { Product } from '../../../../nodejs-aws-fe/src/models/Product';
+import { Product } from '../models/product';
 
 export class ProductService {
     private readonly dbService: DBService;

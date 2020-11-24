@@ -3,6 +3,7 @@ import { Logger } from '../../../shared/utility/logger';
 import { ProductValidator } from '../validators/product.validator';
 import { ProductService } from '../services/product.service';
 import { SNSService } from '../services/sns.service';
+import { Tiers } from '../models/product';
 
 export const catalogBatchProcess: SQSHandler = async (event): Promise<void> => {
     Logger.logEvent(event);
@@ -29,9 +30,20 @@ export const catalogBatchProcess: SQSHandler = async (event): Promise<void> => {
         isValid && processedProducts.push(product);
     }
 
-    const message = processedProducts.map(({title, count}, index) => {
-        return `${index}: ${title} with count = ${count}`
+    const message = processedProducts.map(({ title, count }, index) => {
+        return `${index}: ${title} with count = ${count}`;
     }).join('\n');
 
-    await snsService.sendEmail('Import products reply', message);
+    const topTier = processedProducts
+        .map(product => product.tier)
+        .find(tier => tier === Tiers.mighty);
+
+    try {
+        const data = await snsService.sendEmail('Import products reply', message, {
+            topTier: topTier || 'notTop',
+        });
+        console.log(`Send email -> Data: ${JSON.stringify(data)}`);
+    } catch (error) {
+        console.log(`Send email -> Error: ${JSON.stringify(error)}`);
+    }
 };

@@ -76,7 +76,7 @@ const serverlessConfiguration: Serverless = {
                         Ref: 'SNSTopic'
                     },
                     FilterPolicy: {
-                        "tier": ["Mighty"]
+                        "topTier": ["Mighty"]
                     }
                 }
             }
