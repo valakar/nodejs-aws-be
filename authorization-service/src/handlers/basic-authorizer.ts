@@ -8,28 +8,28 @@ import { config } from '../configs/config';
 
 export const basicAuthorizer: APIGatewayTokenAuthorizerHandler = async (
     event: APIGatewayTokenAuthorizerEvent,
-    _context
+    _context,
+    cb
 ) => {
     Logger.logEvent(event);
 
     if (event?.type !== 'TOKEN') {
-        throw new Error('Unauthorized')
+        cb('Unauthorized')
     }
 
     try {
-        console.log('process.env', process.env);
         console.log('user', config.getCredByUser('valakar'));
 
         const { authorizationToken, methodArn } = event;
         const encodedCred = authorizationToken.split(' ')[1];
         const decodedCred = Buffer.from(encodedCred, 'base64');
         const [username, password] = decodedCred.toString('utf-8').split(':');
-        console.log(username, password);
-        const effect = password == 'test_password' ? 'Allow' : 'Deny';
+        const userCred = config.getCredByUser(username);
+        const effect = password == userCred ? 'Allow' : 'Deny';
 
         return generatePolicy(encodedCred, methodArn, effect);
     } catch (error) {
-        throw new Error(`Unauthorized: ${error}`)
+        cb(`Unauthorized: ${error}`)
     }
 };
 
