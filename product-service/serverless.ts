@@ -14,7 +14,6 @@ const serverlessConfiguration: Serverless = {
         },
 
     },
-    // Add the serverless-webpack plugin
     plugins: [
         'serverless-webpack',
         'serverless-aws-documentation',

@@ -13,7 +13,6 @@ const serverlessConfiguration: Serverless = {
             includeModules: true,
         },
     },
-    // Add the serverless-webpack plugin
     plugins: [
         'serverless-webpack',
         'serverless-dotenv-plugin'
@@ -47,6 +46,40 @@ const serverlessConfiguration: Serverless = {
             }
         ],
     },
+    resources: {
+        Resources: {
+            ApiGatewayResponseUnauthorized: {
+                Type: 'AWS::ApiGateway::GatewayResponse',
+                Properties: {
+                    ResponseParameters: {
+                        'gatewayresponse.header.Access-Control-Allow-Origin': "'*'",
+                        'gatewayresponse.header.Access-Control-Allow-Headers': "'*'",
+                        'gatewayresponse.header.Access-Control-Allow-Credentials': "'true'",
+                        'gatewayresponse.header.Access-Control-Allow-Methods': "'GET,OPTIONS'",
+                    },
+                    ResponseType: 'UNAUTHORIZED',
+                    RestApiId: {
+                        Ref: 'ApiGatewayRestApi'
+                    }
+                }
+            },
+            ApiGatewayResponseAccessDenied: {
+                Type: 'AWS::ApiGateway::GatewayResponse',
+                Properties: {
+                    ResponseParameters: {
+                        'gatewayresponse.header.Access-Control-Allow-Origin': "'*'",
+                        'gatewayresponse.header.Access-Control-Allow-Headers': "'*'",
+                        'gatewayresponse.header.Access-Control-Allow-Credentials': "'true'",
+                        'gatewayresponse.header.Access-Control-Allow-Methods': "'GET,OPTIONS'",
+                    },
+                    ResponseType: 'ACCESS_DENIED',
+                    RestApiId: {
+                        Ref: 'ApiGatewayRestApi'
+                    }
+                }
+            }
+        }
+    },
     functions: {
         importProductsFile: {
             handler: 'handler.importProductsFile',
@@ -61,6 +94,14 @@ const serverlessConfiguration: Serverless = {
                                     name: true
                                 }
                             }
+                        },
+                        cors: true,
+                        authorizer: {
+                            name: 'basicAuthorizer',
+                            type: 'token',
+                            arn: `$\{${config.AUTHORIZATION_SERVICE_STACK}.BasicAuthorizerLambdaFunctionQualifiedArn}`,
+                            resultTtlInSeconds: 0,
+                            identitySource: 'method.request.header.Authorization'
                         }
                     },
                 },

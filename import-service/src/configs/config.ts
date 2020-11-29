@@ -6,4 +6,5 @@ export const config = {
     SQS_ARN: getEnv('SQS_ARN'),
     REGION: getEnv('REGION') || 'eu-west-1',
     PRODUCT_SERVICE_STACK: getEnv('PRODUCT_SERVICE_STACK'),
+    AUTHORIZATION_SERVICE_STACK: getEnv('AUTHORIZATION_SERVICE_STACK'),
 }
