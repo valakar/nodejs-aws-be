@@ -1,12 +1,16 @@
 import { All, Controller, HttpException, HttpStatus, Req, Request, Res } from '@nestjs/common';
 import { AppService } from './app.service';
+import { CacheStore } from './cache.store';
 
 @Controller()
 export class AppController {
-    constructor(private appService: AppService) {}
+    constructor(
+        private appService: AppService,
+        private cacheStore: CacheStore
+    ) {}
 
     @All('/*')
-    async getHello(
+    async proxyAll(
         @Req() request: Request,
         @Res() response,
     ): Promise<void> {
@@ -16,7 +20,6 @@ export class AppController {
         console.log('body', body);
 
         const [, recipient, ...url] = originalUrl.split('/');
-
         console.log('recipient', recipient);
 
         const recipientUrl = process.env[recipient];
@@ -24,11 +27,19 @@ export class AppController {
 
         if (recipientUrl) {
             try {
+                const cached = await this.cacheStore.get(recipient, url, method);
+
+                if (!!cached) {
+                    return response.status(HttpStatus.OK).send(cached);
+                }
+
                 const { status, data } = await this.appService.redirectRequest(
                     `${recipientUrl}/${url.join('/')}`,
                     method,
                     body,
                 );
+
+                await this.cacheStore.set(recipient, url, method, data);
 
                 response.status(status).send(data);
             } catch (error) {
