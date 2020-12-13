@@ -10,7 +10,7 @@ export class AppController {
         @Req() request: Request,
         @Res() response,
     ): Promise<void> {
-        const { method, body, originalUrl } = <any>request;
+        const { method, body, originalUrl, headers } = <any>request;
         console.log('originalUrl', originalUrl);
         console.log('method', method);
         console.log('body', body);
@@ -29,6 +29,7 @@ export class AppController {
                     `${recipientUrl}/${url.join('/')}`,
                     method,
                     body,
+                    headers
                 );
 
                 response.status(status).send(data);
