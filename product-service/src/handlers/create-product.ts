@@ -16,7 +16,7 @@ export const createProduct: APIGatewayProxyHandler = async (event) => {
             return _400('No product provided');
         }
 
-        const product = JSON.parse(event.body);
+        product = JSON.parse(event.body);
         await ProductValidator.validateProductCreation(product);
     } catch (err) {
         return _400(`Invalid data provided: ${err}`);

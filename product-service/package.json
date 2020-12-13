@@ -7,7 +7,7 @@
     "deploy": "npx sls deploy",
     "deploy:getProductById": "npx sls deploy --function getProductById",
     "deploy:getProductList": "npx sls deploy --function getProductList",
-    "deploy:postProduct": "npx sls deploy --function postProduct",
+    "deploy:createProduct": "npx sls deploy --function createProduct",
     "deploy:catalogBatchProcess": "npx sls deploy --function catalogBatchProcess",
     "test": "jest"
   },
