@@ -20,6 +20,7 @@ export class AppController {
         console.log('recipient', recipient);
 
         const recipientUrl = process.env[recipient];
+        console.log(123, process.env);
         console.log('recipientUrl', recipientUrl);
 
         if (recipientUrl) {

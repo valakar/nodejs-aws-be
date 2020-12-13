@@ -1,6 +1,4 @@
 import { HttpService, Injectable } from '@nestjs/common';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class AppService {
