@@ -10,7 +10,7 @@ export class AppController {
         @Req() request: Request,
         @Res() response,
     ): Promise<void> {
-        const { method, body, originalUrl, headers } = <any>request;
+        const { method, body, originalUrl } = <any>request;
         console.log('originalUrl', originalUrl);
         console.log('method', method);
         console.log('body', body);
@@ -20,7 +20,6 @@ export class AppController {
         console.log('recipient', recipient);
 
         const recipientUrl = process.env[recipient];
-        console.log(123, process.env);
         console.log('recipientUrl', recipientUrl);
 
         if (recipientUrl) {
@@ -29,7 +28,6 @@ export class AppController {
                     `${recipientUrl}/${url.join('/')}`,
                     method,
                     body,
-                    headers
                 );
 
                 response.status(status).send(data);
