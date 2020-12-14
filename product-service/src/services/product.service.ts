@@ -29,6 +29,8 @@ where product.id = '${id}'
     }
 
     async createProduct(product: Product): Promise<any> {
+        console.log('Product to save:', product);
+
         const createProduct = `
 insert into product (title,description,tier,image,price,score) VALUES
  ($1, $2, $3, $4, $5, $6) 
